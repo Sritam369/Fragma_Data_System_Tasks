@@ -23,6 +23,6 @@ public List<MajorityWinnerDTO> majorityConstituency(List<WinningCandidates> wLis
 			 result.add(m);
 		 }
 		 
-		 return result;
+		return result;
 	}
 }

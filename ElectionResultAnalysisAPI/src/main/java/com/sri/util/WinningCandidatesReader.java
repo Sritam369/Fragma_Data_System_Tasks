@@ -41,6 +41,7 @@ public class WinningCandidatesReader {
 		
 		b.close();
 		}
+		
 		catch(Exception e) {
 			throw new CSVFileException("Unable to read winning candidates csv file");
 		}

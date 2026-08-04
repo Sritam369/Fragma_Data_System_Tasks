@@ -22,7 +22,7 @@ public class ResultByState {
         Map<String, List<ElectionResult>> stateWiseData = eList.stream().collect(Collectors.groupingBy(e->e.getState()));
 
         Map<String, Integer> totalVotes = eList.stream().collect(Collectors.groupingBy(e->e.getState(),
-                        Collectors.summingInt(e->e.getTotalVotes())));
+                                          Collectors.summingInt(e->e.getTotalVotes())));
 
         for (String state : stateWiseData.keySet()) {
 

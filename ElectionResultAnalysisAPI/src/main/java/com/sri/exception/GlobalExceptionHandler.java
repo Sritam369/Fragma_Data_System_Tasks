@@ -18,6 +18,14 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ExceptionDetails>(ed,HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(ConstituencyNotFoundException.class)
+	public ResponseEntity<ExceptionDetails> handleConstituencyException(ConstituencyNotFoundException e){
+		
+		ExceptionDetails ed = new ExceptionDetails(LocalDateTime.now(),e.getMessage(),"Constituency not found in the csv file");
+		
+		return new ResponseEntity<ExceptionDetails>(ed,HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ExceptionDetails> handleException(Exception e) {
 

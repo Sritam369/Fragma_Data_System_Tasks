@@ -14,7 +14,7 @@ import com.sri.model.WinningCandidates;
 @Service
 public class ResultByConstituency {
 
-    public List<ConstituencyResultDTO> resultByConstituency(List<WinningCandidates> wList, List<ElectionResult> eList) {
+    public List<ConstituencyResultDTO> resultByConstituency(List<WinningCandidates> wList, List<ElectionResult> eList){
 
         List<ConstituencyResultDTO> result = new ArrayList<>();
 

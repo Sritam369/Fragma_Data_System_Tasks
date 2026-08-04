@@ -15,8 +15,7 @@ import com.sri.model.WinningCandidates;
 @Service
 public class ResultByParty {
 
-    public List<PartyResultDTO> partyResult(List<ElectionResult> eList,
-                                            List<WinningCandidates> wList) {
+    public List<PartyResultDTO> partyResult(List<ElectionResult> eList,List<WinningCandidates> wList) {
 
         Map<String, Integer> totalVotesPerParty = eList.stream().filter(e -> !e.getParty().equalsIgnoreCase("Independent"))
                 .collect(Collectors.groupingBy(e->e.getParty(),Collectors.summingInt(e->e.getTotalVotes())));
@@ -49,4 +48,5 @@ public class ResultByParty {
 
         return result;
     }
+    
 }
