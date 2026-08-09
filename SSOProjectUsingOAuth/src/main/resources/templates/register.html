@@ -1,0 +1,23 @@
+<center>
+<form th:action="@{/register}" th:object="${user}" method="post">
+
+    Name :
+    <input type="text" th:field="*{name}" readonly><br><br>
+
+    Email :
+    <input type="email" th:field="*{email}" readonly><br><br>
+
+    Phone Number :
+    <input type="text" th:field="*{phone}"><br><br>
+
+    Department :
+    <input type="text" th:field="*{department}"><br><br>
+
+    Designation :
+    <input type="text" th:field="*{designation}"><br><br>
+    
+    <input type="hidden" th:field="*{photoUrl}">
+
+    <input type="submit" value="Register">
+
+</form>

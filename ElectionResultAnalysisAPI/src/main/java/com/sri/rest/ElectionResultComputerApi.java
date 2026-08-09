@@ -72,10 +72,9 @@ public class ElectionResultComputerApi {
 	    @GetMapping("/party")
 	    public List<PartyResultDTO> getPartyResult()  {
     
-	        List<ElectionResult> eList = electionResultReader.readResult("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results.csv");
+	        List<ElectionResult> eList = electionResultReader.getElectionResults();
 
-	        List<WinningCandidates> wList = winningCandidatesReader.readWinners("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results_Winning_Candidate.csv");
-
+	        List<WinningCandidates> wList = winningCandidatesReader.getWinningCandidates();
 	         List<PartyResultDTO> partyResult = resultByParty.partyResult(eList, wList);
 	         return partyResult;
 	    } 
@@ -83,7 +82,7 @@ public class ElectionResultComputerApi {
 	    @GetMapping("/state")
 	    public List<StateResultDTO> getStateResult() {
 	    	
-	    	 List<ElectionResult> eList = electionResultReader.readResult("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results.csv");
+	    	 List<ElectionResult> eList = electionResultReader.getElectionResults();
 	        
 	         List<StateResultDTO> stateResult = resultByState.stateResult(eList);
 	         return stateResult;
@@ -92,10 +91,10 @@ public class ElectionResultComputerApi {
 	    @GetMapping("/constituency")
 	    public List<ConstituencyResultDTO> getConstituencyResult() {
 	    	
-	    	 List<ElectionResult> eList = electionResultReader.readResult("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results.csv");
+	    	List<ElectionResult> eList = electionResultReader.getElectionResults();
 
-		     List<WinningCandidates> wList = winningCandidatesReader.readWinners("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results_Winning_Candidate.csv");
-
+	        List<WinningCandidates> wList = winningCandidatesReader.getWinningCandidates();
+	        
 		     List<ConstituencyResultDTO> result = resultByConstituency.resultByConstituency(wList, eList);
 		     return result;
 	    }
@@ -103,7 +102,7 @@ public class ElectionResultComputerApi {
 	    @GetMapping("/majorityWinner")
 	    public List<MajorityWinnerDTO> getMajorityWinner() {
 
-	        List<WinningCandidates> wList = winningCandidatesReader.readWinners("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results_Winning_Candidate.csv");
+	    	 List<WinningCandidates> wList = winningCandidatesReader.getWinningCandidates();
 
 	         List<MajorityWinnerDTO> majorityConstituency = majorityWinner.majorityConstituency(wList);
 	         return majorityConstituency;
@@ -113,6 +112,45 @@ public class ElectionResultComputerApi {
 	    @GetMapping("/top")
 	    public List<TopPartiesByVotesDTO> getTop5Parties(){
 	    	
+<<<<<<< HEAD
+	    	List<ElectionResult> eList = electionResultReader.getElectionResults();
+	    	List<TopPartiesByVotesDTO> partiesByVotes = topParties.getPartiesByVotes(eList);
+	    	
+	    	return partiesByVotes;
+	    }
+	    
+	    @GetMapping("/topCandidates")
+	    public List<Top5WinnersDTO> getTop5Candidates(){
+	    	
+	    	 List<WinningCandidates> wList = winningCandidatesReader.getWinningCandidates();
+             List<Top5WinnersDTO> winnersByParty = topWinners.getWinnersByParty(wList);
+	    	
+	    	return  winnersByParty;
+	    }
+	    
+	    @GetMapping("/maxConstituency")
+	    public ConstituencyWithMaxCandidatesDTO getConstituency() {
+	    	
+	    	List<ElectionResult> eList = electionResultReader.getElectionResults();
+	    	ConstituencyWithMaxCandidatesDTO constituency = maxCandidates.getConstituency(eList);
+	    	
+	    	return constituency;
+	    }
+	    
+	    @GetMapping("/candidates/{name}")
+	    public CandidatesByConstituencyDTO getCandidates(@PathVariable("name")String name) {
+	    	
+	    	List<ElectionResult> eList = electionResultReader.getElectionResults();
+	    	CandidatesByConstituencyDTO candidatesName = candidates.getCandidates(eList, name);
+	    	
+	    	return candidatesName;
+	    }
+	    
+	    @GetMapping("/highestTurnout")
+	    public StateWithHighestVotesDTO getState() {
+	    	
+	    	List<ElectionResult> eList = electionResultReader.getElectionResults();
+=======
 	    	List<ElectionResult> eList = electionResultReader.readResult("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results.csv");
 	    	List<TopPartiesByVotesDTO> partiesByVotes = topParties.getPartiesByVotes(eList);
 	    	
@@ -150,6 +188,7 @@ public class ElectionResultComputerApi {
 	    public StateWithHighestVotesDTO getState() {
 	    	
 	    	List<ElectionResult> eList = electionResultReader.readResult("C:\\Users\\Sritam Chakrabartty\\Downloads\\2019_Results.csv");
+>>>>>>> branch 'main' of https://github.com/Sritam369/Fragma_Data_System_Tasks.git
 	    	StateWithHighestVotesDTO state2 = state.getState(eList);
 	    	
 	    	return state2;

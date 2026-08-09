@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+</head>
+<style>
+.d1 a{
+text-decoration: none;
+}
+</style>
+<body>
+
+<center>
+<h2>User Profile</h2>
+
+<img th:src="${picture}" alt="Profile Picture" width="150" height="150">
+
+<br><br>
+
+<b>Name :</b>
+<span th:text="${user.name}"></span>
+
+<br><br>
+
+<b>Email :</b>
+<span th:text="${user.email}"></span>
+
+<br><br>
+
+<b>Phone Number :</b>
+<span th:text="${user.phone}"></span>
+
+<br><br>
+
+<b>Department :</b>
+<span th:text="${user.department}"></span>
+
+<br><br>
+
+<b>Designation :</b>
+<span th:text="${user.designation}"></span>
+
+<br><br>
+
+<div class="d1">
+<button><a th:href="@{/logout}">Logout</a></button>
+</div>
+
+</body>
+</html>
