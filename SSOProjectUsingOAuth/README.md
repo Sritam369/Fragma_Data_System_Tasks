@@ -1,8 +1,8 @@
-# Google OAuth2 SSO Project
+# Google & GitHub OAuth2 SSO Project
 
 ## Project Description
 
-This project implements Single Sign-On (SSO) using Google OAuth2 in a Spring Boot application.
+This project implements Single Sign-On (SSO) using Google and GitHub OAuth2 in a Spring Boot application.
 
 ## Technologies Used
 
@@ -10,6 +10,7 @@ This project implements Single Sign-On (SSO) using Google OAuth2 in a Spring Boo
 - Spring Boot 4.0.7
 - Spring Security
 - Google OAuth2
+- GitHub OAuth2
 - Spring Data JPA
 - Oracle Database
 - Thymeleaf
@@ -18,19 +19,21 @@ This project implements Single Sign-On (SSO) using Google OAuth2 in a Spring Boo
 ## Features
 
 - Google OAuth2 Login
+- GitHub OAuth2 Login
 - New user registration
 - Existing user detection using email
+- Google and GitHub account linking using email
 - User profile page
 - Logout functionality
 - User details stored in the database
-- Google profile picture display
+- Google and GitHub profile picture display
 
 ## User Flow
 
 1. User opens the Home page.
-2. User clicks **Login with Google**.
-3. User is redirected to Google for authentication.
-4. After successful authentication, the application receives the user's Google details.
+2. User clicks **Login with Google** or **Login with GitHub**.
+3. User is redirected to the selected provider for authentication.
+4. After successful authentication, the application receives the user's details.
 5. The application checks whether the user's email exists in the database.
 6. If the user already exists, the user is redirected to the Profile page.
 7. If the user is new, the Registration page is displayed.
@@ -46,19 +49,19 @@ This project implements Single Sign-On (SSO) using Google OAuth2 in a Spring Boo
 
 The user details are stored in the `USER_DETAILS_DB` table.
 
-| Field | Description |
-|---|---|
-| ID | Primary Key |
-| EMAIL | Unique email address |
-| NAME | User name |
-| PHOTO_URL | Google profile picture URL |
-| PHONE | Phone number |
-| DEPARTMENT | Department |
-| DESIGNATION | Designation |
+| Field       | Description                  |
+| ----------- | ---------------------------- |
+| ID          | Primary Key                  |
+| EMAIL       | Unique email address         |
+| NAME        | User name                    |
+| PHOTO_URL   | Profile picture URL          |
+| PHONE       | Phone number                 |
+| DEPARTMENT  | Department                   |
+| DESIGNATION | Designation                 |
 
 ## New User Detection
 
-After successful Google authentication, the application retrieves the user's email address.
+After successful Google or GitHub authentication, the application retrieves the user's email address.
 
 The application checks whether the email already exists in the database.
 
@@ -81,6 +84,22 @@ The Google profile provides information such as:
 
 - Name
 - Email
+- Profile Picture
+
+## GitHub OAuth2
+
+GitHub OAuth2 is used for authentication.
+
+The application requests the following scopes:
+
+- `read:user`
+- `user:email`
+
+The GitHub profile provides information such as:
+
+- Name
+- Email
+- Username
 - Profile Picture
 
 ## Application Port
