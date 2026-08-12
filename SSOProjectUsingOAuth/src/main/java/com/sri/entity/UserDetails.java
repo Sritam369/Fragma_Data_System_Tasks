@@ -25,7 +25,6 @@ public class UserDetails {
 	@Column(unique = true)
 	private String email;
 	private String name;
-	private String photoUrl;
 	private String designation;
 	private String phone;
 	private String department;

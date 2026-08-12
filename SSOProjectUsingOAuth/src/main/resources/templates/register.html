@@ -1,23 +1,109 @@
-<center>
-<form th:action="@{/register}" th:object="${user}" method="post">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 
-    Name :
-    <input type="text" th:field="*{name}" readonly><br><br>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
 
-    Email :
-    <input type="email" th:field="*{email}" readonly><br><br>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
 
-    Phone Number :
-    <input type="text" th:field="*{phone}"><br><br>
+        .register-box {
+            width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
 
-    Department :
-    <input type="text" th:field="*{department}"><br><br>
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-    Designation :
-    <input type="text" th:field="*{designation}"><br><br>
-    
-    <input type="hidden" th:field="*{photoUrl}">
+        .field {
+            margin-bottom: 15px;
+        }
 
-    <input type="submit" value="Register">
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
 
-</form>
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 9px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[readonly] {
+            background: #eee;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #4285f4;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background: #3367d6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-box">
+
+        <h2>Complete Registration</h2>
+
+        <form th:action="@{/register}" th:object="${user}" method="post">
+
+            <div class="field">
+                <label>Name</label>
+                <input type="text" th:field="*{name}" readonly>
+            </div>
+
+            <div class="field">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" readonly>
+            </div>
+
+            <div class="field">
+                <label>Phone Number</label>
+                <input type="text" th:field="*{phone}">
+            </div>
+
+            <div class="field">
+                <label>Department</label>
+                <input type="text" th:field="*{department}">
+            </div>
+
+            <div class="field">
+                <label>Designation</label>
+                <input type="text" th:field="*{designation}">
+            </div>
+
+            <input type="submit" value="Register">
+
+        </form>
+
+    </div>
+
+</body>
+</html>

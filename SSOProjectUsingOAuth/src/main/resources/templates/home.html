@@ -1,26 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    
+    <meta charset="UTF-8">
     <title>Fragma Data</title>
-    
-   <style>
 
-.d1{
-    text-align: center;
-}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
 
-.d1 a{
-    text-decoration: none;
-}
+        .d1 {
+            text-align: center;
+            margin-top: 150px;
+        }
 
-</style>
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .login-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4285f4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .login-btn:hover {
+            background: #3367d6;
+        }
+    </style>
 </head>
-<body>
-<div class="d1">
-<h1>Welcome to Fragma Data</h1>
 
-<button><a href="/oauth2/authorization/google">Login with Google</a></button>
-</div>
+<body>
+
+    <div class="d1">
+        <h1>Welcome to Fragma Data</h1>
+
+        <a class="login-btn" href="/oauth2/authorization/google">
+            Login with Google
+        </a>
+        
+        <a class="login-btn" href="/oauth2/authorization/github">
+            Login with GitHub
+        </a>
+    </div>
+
 </body>
 </html>

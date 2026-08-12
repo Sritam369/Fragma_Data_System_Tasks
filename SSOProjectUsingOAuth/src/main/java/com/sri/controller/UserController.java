@@ -28,14 +28,20 @@ public class UserController {
 	                      Map<String,Object> map) {
 
 	    String email = oAuth2User.getAttribute("email");
+	    
+	    String picture = oAuth2User.getAttribute("picture");
+
+        if (picture == null) {
+            picture = oAuth2User.getAttribute("avatar_url");
+        }
 
 	    UserDetails user = service.getUserByEmail(email);
 
 	    if (user != null) {
 
 	        map.put("user", user);
-	        map.put("picture", oAuth2User.getAttribute("picture"));
-
+	        map.put("picture", picture);
+	        
 	        return "profile";
 
 	    } else {
@@ -43,8 +49,7 @@ public class UserController {
 	        UserDetails newUser = new UserDetails();
 	        newUser.setName(oAuth2User.getAttribute("name"));
 	        newUser.setEmail(email);
-	        newUser.setPhotoUrl(oAuth2User.getAttribute("picture"));
-
+	        
 	        map.put("user", newUser);
 
 	        return "register";
