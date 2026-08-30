@@ -40,15 +40,14 @@ public class UserController {
         return "home";
     }
     
+    
     // Creating Authorization url
     
     @GetMapping("/oauth2/authorize/{provider}")
     public RedirectView authorize(@PathVariable String provider,HttpSession session) {
 
-        // Generate state
         String state = UUID.randomUUID().toString();
 
-        // Store state and provider in session
         session.setAttribute("OAUTH_STATE", state);
         session.setAttribute("OAUTH_PROVIDER", provider);
 
@@ -132,10 +131,8 @@ public class UserController {
             return "redirect:/?error=unknown_provider";
         }
 
-        // Saving the object in session scope
         session.setAttribute("LOGGED_IN_USER", oauthUser);
 
-        // OAuth request information is no longer needed
         session.removeAttribute("OAUTH_STATE");
         session.removeAttribute("OAUTH_PROVIDER");
 
