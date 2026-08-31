@@ -1,7 +1,6 @@
 package com.sri.exception;
 
-public class UserAlreadyRegisteredException
-        extends RuntimeException {
+public class UserAlreadyRegisteredException extends RuntimeException {
 
 	/**
 	     * 

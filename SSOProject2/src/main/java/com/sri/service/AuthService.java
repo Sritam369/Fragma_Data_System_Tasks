@@ -34,9 +34,7 @@ public class AuthService {
 
         if (!Set.of("google", "aws", "azure").contains(provider)) {
 
-            throw new IllegalArgumentException(
-                    "Unsupported authentication provider: " + provider
-            );
+            throw new IllegalArgumentException("Unsupported authentication provider: " + provider);
         }
 
         return Map.of(

@@ -23,36 +23,25 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     }
 
     @Override
-    public void onAuthenticationSuccess(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Authentication authentication)
-            throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request,HttpServletResponse response,Authentication authentication) throws IOException, ServletException {
 
-        OAuth2AuthenticationToken oauthToken =
-                (OAuth2AuthenticationToken) authentication;
+        OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
 
-        OAuth2User oauthUser =
-                oauthToken.getPrincipal();
+        OAuth2User oauthUser = oauthToken.getPrincipal();
 
-        String provider =
-                oauthToken.getAuthorizedClientRegistrationId();
+        String provider = oauthToken.getAuthorizedClientRegistrationId();
 
-        String name =
-                oauthUser.getAttribute("name");
+        String name = oauthUser.getAttribute("name");
 
-        String email =
-                oauthUser.getAttribute("email");
+        String email = oauthUser.getAttribute("email");
 
-        String picture =
-                oauthUser.getAttribute("picture");
+        String picture = oauthUser.getAttribute("picture");
 
         // Azure fallback
         if (email == null && "azure".equals(provider)) {
             email = oauthUser.getAttribute("preferred_username");
         }
 
-        // Store OAuth user information in session
         HttpSession session = request.getSession();
 
         session.setAttribute("oauthName", name);
@@ -60,17 +49,14 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         session.setAttribute("oauthProvider", provider);
         session.setAttribute("oauthPicture", picture);
 
-        // Check whether user is already registered
         if (userService.getUserByEmail(email) != null) {
 
-            // Existing user
             response.sendRedirect(
                 "http://localhost:5501/dashboard.html"
             );
 
         } else {
 
-            // New user
             response.sendRedirect(
                 "http://localhost:5501/register.html"
             );

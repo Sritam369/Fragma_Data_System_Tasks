@@ -28,31 +28,21 @@ public class UserController {
     @GetMapping("/api/profile")
     public ResponseEntity<?> profile(HttpSession session) {
 
-        String provider =
-                (String) session.getAttribute("oauthProvider");
+        String provider = (String) session.getAttribute("oauthProvider");
 
-        String name =
-                (String) session.getAttribute("oauthName");
+        String name = (String) session.getAttribute("oauthName");
 
-        String email =
-                (String) session.getAttribute("oauthEmail");
+        String email = (String) session.getAttribute("oauthEmail");
 
-        String picture =
-                (String) session.getAttribute("oauthPicture");
+        String picture = (String) session.getAttribute("oauthPicture");
 
-
-        // No OAuth user in session
+        
         if (email == null) {
             throw new UserNotAuthenticatedException();
         }
 
+        UserDetails user = service.getUserByEmail(email);
 
-        // Find user in database
-        UserDetails user =
-                service.getUserByEmail(email);
-
-
-        // User already registered
         if (user != null) {
 
             Map<String, Object> response = Map.of(
@@ -92,27 +82,19 @@ public class UserController {
 
 
     @PostMapping("/api/register")
-    public ResponseEntity<?> register(
-            HttpSession session,
-            @RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(HttpSession session, @RequestBody RegisterRequest request) {
 
 
-        String email =
-                (String) session.getAttribute("oauthEmail");
+        String email = (String) session.getAttribute("oauthEmail");
 
-        String name =
-                (String) session.getAttribute("oauthName");
+        String name = (String) session.getAttribute("oauthName");
 
 
-        // OAuth session doesn't exist
         if (email == null) {
             throw new UserNotAuthenticatedException();
         }
 
-
-        // Check whether user already exists
-        UserDetails existing =
-                service.getUserByEmail(email);
+        UserDetails existing = service.getUserByEmail(email);
 
         if (existing != null) {
 
@@ -121,29 +103,15 @@ public class UserController {
             );
         }
 
-
-        // Create new user
-        UserDetails user =
-                new UserDetails();
+        UserDetails user = new UserDetails();
 
         user.setName(name);
         user.setEmail(email);
+        user.setPhone(request.getPhone());
+        user.setDepartment(request.getDepartment());
+        user.setDesignation(request.getDesignation());
 
-        user.setPhone(
-                request.getPhone()
-        );
-
-        user.setDepartment(
-                request.getDepartment()
-        );
-
-        user.setDesignation(
-                request.getDesignation()
-        );
-
-
-        UserDetails savedUser =
-                service.addUser(user);
+        UserDetails savedUser = service.addUser(user);
 
 
         return ResponseEntity
