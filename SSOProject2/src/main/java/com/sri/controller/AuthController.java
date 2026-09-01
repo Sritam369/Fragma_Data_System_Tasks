@@ -21,13 +21,12 @@ public class AuthController {
 
     private final AuthService authService;
 
-
     @GetMapping("/providers")
     public ResponseEntity<?> getProviders() {
 
         return ResponseEntity.ok(
             Map.of(
-                "providers",authService.getProviders()
+                "providers", authService.getProviders()
             )
         );
     }
@@ -36,8 +35,10 @@ public class AuthController {
     @GetMapping("/login/{provider}")
     public void login(@PathVariable String provider,HttpServletResponse response) throws IOException {
 
-        String loginUrl = authService.getLoginUrl(provider).get("loginUrl");
+        String providerId = authService.getLoginUrl(provider).get("provider");
 
-        response.sendRedirect(loginUrl);
+        response.sendRedirect(
+            "/oauth2/authorization/" + providerId
+        );
     }
 }

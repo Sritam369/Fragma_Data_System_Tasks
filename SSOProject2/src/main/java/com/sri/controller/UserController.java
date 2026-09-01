@@ -2,8 +2,11 @@ package com.sri.controller;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +41,7 @@ public class UserController {
 
         
         if (email == null) {
-            throw new UserNotAuthenticatedException();
+            throw new UserNotAuthenticatedException("User is not authenticated");
         }
 
         UserDetails user = service.getUserByEmail(email);
@@ -91,7 +94,7 @@ public class UserController {
 
 
         if (email == null) {
-            throw new UserNotAuthenticatedException();
+            throw new UserNotAuthenticatedException("User is not authenticated");
         }
 
         UserDetails existing = service.getUserByEmail(email);

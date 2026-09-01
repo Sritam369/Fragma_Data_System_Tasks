@@ -2,44 +2,44 @@ package com.sri.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.sri.entity.OAuthProvider;
+import com.sri.repository.OAuthProviderRepository;
 
 @Service
 public class AuthService {
 
-    public List<Map<String, String>> getProviders() {
+	@Autowired
+	private OAuthProviderRepository oauthProviderRepository;
+	
+    	public List<Map<String, String>> getProviders() {
 
-        return List.of(
-            Map.of(
-                "id", "google",
-                "name", "Google",
-                "loginUrl", "/api/auth/login/google"
-            ),
-            Map.of(
-                "id", "aws",
-                "name", "Amazon",
-                "loginUrl", "/api/auth/login/aws"
-            ),
-            Map.of(
-                "id", "azure",
-                "name", "Microsoft",
-                "loginUrl", "/api/auth/login/azure"
-            )
-        );
+    	    return oauthProviderRepository.findAll()
+    	        .stream()
+    	        .map(provider -> Map.of(
+    	            "name", provider.getProviderName(),
+    	            "id", provider.getProviderId(),
+    	            "loginUrl", provider.getLoginUrl()
+    	        ))
+    	        .toList();
+    	
     }
     
-    public Map<String, String> getLoginUrl(String provider) {
+    	 public Map<String, String> getLoginUrl(String provider) {
 
-        if (!Set.of("google", "aws", "azure").contains(provider)) {
+    	        OAuthProvider oauthProvider = oauthProviderRepository.findByProviderId(provider)
+    	                    .orElseThrow(() ->
+    	                        new IllegalArgumentException(
+    	                            "Unsupported authentication provider: " + provider
+    	                        )
+    	                    );
 
-            throw new IllegalArgumentException("Unsupported authentication provider: " + provider);
-        }
-
-        return Map.of(
-                "provider", provider,
-                "loginUrl", "/oauth2/authorization/" + provider
-        );
-    }
+    	        return Map.of(
+    	            "provider", oauthProvider.getProviderId(),
+    	            "loginUrl", oauthProvider.getLoginUrl()
+    	        );
+    	    }
 }

@@ -48,8 +48,7 @@ public class GlobalExceptionHandler {
                 .body(Map.of(
                         "status", 405,
                         "error", "Method Not Allowed",
-                        "message",
-                        "HTTP method not supported"
+                        "message", "HTTP method not supported"
                 ));
     }
 
@@ -64,8 +63,7 @@ public class GlobalExceptionHandler {
                 .body(Map.of(
                         "status", 500,
                         "error", "Internal Server Error",
-                        "message",
-                        "Something went wrong on the server"
+                        "message", "Something went wrong on the server"
                 ));
     }
     
@@ -79,8 +77,7 @@ public class GlobalExceptionHandler {
                 .body(Map.of(
                         "status", 500,
                         "error", "Database Error",
-                        "message",
-                        "Unable to process database request"
+                        "message", "Unable to process database request"
                 ));
     }
     

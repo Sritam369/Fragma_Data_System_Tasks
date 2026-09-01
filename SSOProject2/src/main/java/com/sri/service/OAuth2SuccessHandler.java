@@ -38,7 +38,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String picture = oauthUser.getAttribute("picture");
 
         // Azure fallback
-        if (email == null && "azure".equals(provider)) {
+        if (email == null && provider.equals("azure")) {
             email = oauthUser.getAttribute("preferred_username");
         }
 
