@@ -11,9 +11,10 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final UserService userService;
@@ -25,41 +26,39 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,HttpServletResponse response,Authentication authentication) throws IOException, ServletException {
 
+        log.info("OAuth2 authentication successful");
+
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
 
         OAuth2User oauthUser = oauthToken.getPrincipal();
 
         String provider = oauthToken.getAuthorizedClientRegistrationId();
 
-        String name = oauthUser.getAttribute("name");
+        log.info("OAuth2 provider: {}", provider);
 
         String email = oauthUser.getAttribute("email");
 
-        String picture = oauthUser.getAttribute("picture");
-
         // Azure fallback
         if (email == null && provider.equals("azure")) {
+
+            log.debug("Email not found in standard attribute. Using Azure preferred_username");
+
             email = oauthUser.getAttribute("preferred_username");
         }
 
-        HttpSession session = request.getSession();
-
-        session.setAttribute("oauthName", name);
-        session.setAttribute("oauthEmail", email);
-        session.setAttribute("oauthProvider", provider);
-        session.setAttribute("oauthPicture", picture);
+        log.debug("Authenticated user email: {}", email);
 
         if (userService.getUserByEmail(email) != null) {
 
-            response.sendRedirect(
-                "http://localhost:5501/dashboard.html"
-            );
+            log.info("Existing user found. Redirecting to dashboard");
+
+            response.sendRedirect("http://localhost:5501/dashboard.html");
 
         } else {
 
-            response.sendRedirect(
-                "http://localhost:5501/register.html"
-            );
+            log.info("New user detected. Redirecting to registration page");
+
+            response.sendRedirect("http://localhost:5501/register.html");
         }
     }
 }
