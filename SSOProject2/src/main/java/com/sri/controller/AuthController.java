@@ -31,14 +31,4 @@ public class AuthController {
         );
     }
 
-
-    @GetMapping("/login/{provider}")
-    public void login(@PathVariable String provider,HttpServletResponse response) throws IOException {
-
-        String providerId = authService.getLoginUrl(provider).get("provider");
-
-        response.sendRedirect(
-            "/oauth2/authorization/" + providerId
-        );
-    }
 }

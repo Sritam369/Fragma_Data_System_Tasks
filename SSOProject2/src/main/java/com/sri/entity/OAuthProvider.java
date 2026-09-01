@@ -29,9 +29,6 @@ public class OAuthProvider {
     @Column(name = "provider_id", unique = true)
     private String providerId;
 
-    @Column(name = "login_url")
-    private String loginUrl;
-
     @Column(name = "client_id")
     private String clientId;
 

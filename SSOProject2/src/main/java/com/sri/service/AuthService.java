@@ -21,25 +21,10 @@ public class AuthService {
     	        .stream()
     	        .map(provider -> Map.of(
     	            "name", provider.getProviderName(),
-    	            "id", provider.getProviderId(),
-    	            "loginUrl", provider.getLoginUrl()
+    	            "id", provider.getProviderId()
     	        ))
     	        .toList();
     	
     }
-    
-    	 public Map<String, String> getLoginUrl(String provider) {
-
-    	        OAuthProvider oauthProvider = oauthProviderRepository.findByProviderId(provider)
-    	                    .orElseThrow(() ->
-    	                        new IllegalArgumentException(
-    	                            "Unsupported authentication provider: " + provider
-    	                        )
-    	                    );
-
-    	        return Map.of(
-    	            "provider", oauthProvider.getProviderId(),
-    	            "loginUrl", oauthProvider.getLoginUrl()
-    	        );
-    	    }
+       	 
 }
