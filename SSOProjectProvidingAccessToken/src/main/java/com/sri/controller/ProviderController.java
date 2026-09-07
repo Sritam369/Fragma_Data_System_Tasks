@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sri.dto.EmailProvider;
 import com.sri.service.AuthService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ public class ProviderController {
     private String authorizationBaseUrl;
 
     private final AuthService authService;
+    private final EmailProvider emailProvider;
 
 
     @GetMapping("/providers")
@@ -53,5 +55,20 @@ public class ProviderController {
         log.info("Redirecting to OAuth2 authorization endpoint for provider: {}", providerId);
 
         response.sendRedirect(redirectUrl);
+    }
+    
+    @GetMapping("/email")
+    public ResponseEntity<?> getToken() {
+
+        String emailId = emailProvider.getEmail();
+        String provider = emailProvider.getProvider();
+
+        if (emailId == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(
+                Map.of(provider+" Emailid", emailId)
+        );
     }
 }

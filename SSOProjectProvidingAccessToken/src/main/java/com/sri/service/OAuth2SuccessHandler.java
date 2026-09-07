@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.sri.dto.EmailProvider;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,14 +19,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final OAuth2AuthorizedClientService authorizedClientService;
-    private final AccessTokenService accessTokenService;
+    private final EmailProvider emailProvider;
 
     public OAuth2SuccessHandler(
             OAuth2AuthorizedClientService authorizedClientService,
-            AccessTokenService accessTokenService) {
+            EmailProvider emailProvider) {
 
         this.authorizedClientService = authorizedClientService;
-        this.accessTokenService = accessTokenService;
+        this.emailProvider = emailProvider;
     }
 
     @Override
@@ -34,25 +36,25 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String provider =  oauth2Authentication.getAuthorizedClientRegistrationId();
 
-        String username = oauth2Authentication.getName();
+        if (provider == null || provider.isBlank()) {
+            throw new IllegalStateException(
+                    "OAuth2 provider is missing");
+        }
+
+        String email = oauth2Authentication.getPrincipal().getAttribute("email");
         
-        OAuth2AuthorizedClient authorizedClient =  authorizedClientService.loadAuthorizedClient(provider,username);
-
-        if (authorizedClient == null) {
-            throw new IllegalStateException(
-                    "OAuth2 authorized client not found"
-            );
+        if (provider.equals("azure")) {
+            email = oauth2Authentication.getPrincipal().getAttribute("preferred_username");
         }
 
-        if (authorizedClient.getAccessToken() == null) {
+        if (email == null || email.isBlank()) {
             throw new IllegalStateException(
-                    "Access token not found"
-            );
+                    "Email not found in OAuth2 user attributes for provider: "
+                            + provider);
         }
-
-        String accessToken = authorizedClient.getAccessToken().getTokenValue();
-
-        accessTokenService.saveToken(provider,accessToken);
+        
+        emailProvider.setEmail(email);
+        emailProvider.setProvider(provider);
 
     }
 }

@@ -64,7 +64,9 @@ public class OAuthProvider {
 
     @Column(name = "user_info_uri")
     private String userInfoUri;
-
+       
+    @Column(name = "login_path")
+    private String loginPath;
 
     @Column(name = "user_name_attribute")
     private String userNameAttribute;

@@ -31,7 +31,7 @@ public class AuthService {
                     .map(provider -> Map.of(
                         "name", provider.getProviderName(),
                         "id", provider.getProviderId(),
-                        "loginUrl", provider.getLoginUrl()
+                        "loginPath", provider.getLoginPath()
                     ))
                     .toList();
 
